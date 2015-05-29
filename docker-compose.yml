@@ -1,0 +1,11 @@
+web:
+  build: .
+  links:
+   - db
+  ports:
+   - "5000:5000"
+  command: python runserver.py
+  volumes:
+   - .:/code
+db:
+  image: mongo
