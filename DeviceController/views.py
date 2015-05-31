@@ -1,5 +1,5 @@
 from DeviceController import app
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from VideoRecord import VideoRecord
 from mongoengine import *
 import json
@@ -8,7 +8,7 @@ import json
 def index():
     return "Hello world"
 
-@app.route("/movements", methods=['GET', 'POST'] )
+@app.route('/movements', methods=['GET', 'POST'] )
 def movements():
     if request.method == 'GET':
         ids = []
@@ -17,18 +17,21 @@ def movements():
 
         return json.dumps( ids )
     else:
-        post = VideoRecord(testing="123").save()
-        return str(post.id)
+        recordIn = request.get_json(force=True)
 
-@app.route("/movements/<id>", methods=['GET'] )
+        post = VideoRecord.from_json( json.dumps(recordIn))
+#        post.from_json( json.dumps(recordIn) )
+        post.save()
+        return post.testing
+
+@app.route('/movements/<_id>', methods=['GET'] )
 def movement(_id):
     err = 400
     try:
-        doc = VideoRecord.objects (id = _id)
-        if ( doc is None ):
-            err = 404
-        else:
-            return json.dumps ( doc, default=json_util.default ) 
+        doc = VideoRecord.objects.get(id = _id)
+        return doc.to_json()
+    except DoesNotExist:
+        err = 404
     except:
         pass
     abort ( err )

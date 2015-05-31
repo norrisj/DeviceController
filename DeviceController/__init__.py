@@ -13,5 +13,3 @@ connect(
 )
 
 import DeviceController.views
-
-    
