@@ -1,9 +1,5 @@
-from mongoengine import connect
-from pymongo import read_preferences
-
-connect(
-    'alarms',
-    host='db',
-    port=27017,
-    read_preference=read_preferences.ReadPreference.PRIMARY
-)
+DEBUG = False
+TESTING = False
+DATABASE_URI = 'db'
+DATABASE_PORT = 27017
+DATABASE_TABLE = 'alarms'

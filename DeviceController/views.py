@@ -22,7 +22,7 @@ def movements():
         post = VideoRecord.from_json( json.dumps(recordIn))
 #        post.from_json( json.dumps(recordIn) )
         post.save()
-        return post.testing
+        return str(post.id)
 
 @app.route('/movements/<_id>', methods=['GET'] )
 def movement(_id):
