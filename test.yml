@@ -1,0 +1,10 @@
+web:
+  extends:
+    file: common.yml
+    service: webapp
+  links:
+   - db
+  command: python tests.py
+
+db:
+  image: mongo

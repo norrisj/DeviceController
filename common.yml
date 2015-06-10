@@ -1,14 +1,8 @@
-web:
+webapp:
   build: .
-  links:
-   - db
   ports:
    - "5000:5000"
-  command: python runserver.py
   volumes:
    - .:/code
   environment:
     DC_CONFIG_FILE: config/live.py
-
-db:
-  image: mongo
