@@ -3,12 +3,9 @@ from flask import Flask, request, abort, jsonify
 from VideoRecord import VideoRecord
 from mongoengine import *
 import json
+from jsonschema import validate, ValidationError
 
-@app.route("/")
-def index():
-    return "Hello world"
-
-@app.route('/movements', methods=['GET', 'POST'] )
+@app.route('/videos', methods=['GET', 'POST'] )
 def movements():
     if request.method == 'GET':
         ids = []
@@ -19,12 +16,17 @@ def movements():
     else:
         recordIn = request.get_json(force=True)
 
+        try:
+            validate( recordIn, VideoRecord.get_json_schema() )
+        except ValidationError:
+            abort(400)
+
         post = VideoRecord.from_json( json.dumps(recordIn))
 #        post.from_json( json.dumps(recordIn) )
         post.save()
         return str(post.id)
 
-@app.route('/movements/<_id>', methods=['GET'] )
+@app.route('/videos/<_id>', methods=['GET'] )
 def movement(_id):
     err = 400
     try:

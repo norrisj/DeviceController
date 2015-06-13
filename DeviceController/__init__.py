@@ -21,5 +21,10 @@ def close_db(error):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'db'):
         g.db.disconnect()
+
+def drop_db():
+    """Drops all data in the database, for testing really"""
+    if hasattr(g, 'db'):
+        g.db.drop_database( app.config['DATABASE_TABLE'] )
         
 import DeviceController.views

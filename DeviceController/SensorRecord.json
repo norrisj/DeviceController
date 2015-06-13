@@ -1,0 +1,23 @@
+{
+    "description": "Sensor data record",
+    "additionalProperties": false,
+    "properties": {
+        "temperature": {
+            "type": "number"
+        },
+        "humidity": {
+            "type": "number"
+        },
+        "record-date": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "sensor-id": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+        }
+    },
+    "required": [
+        "sensor-id"
+    ]
+}
