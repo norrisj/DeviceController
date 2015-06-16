@@ -3,6 +3,7 @@ import unittest
 import DeviceController
 import json
 import uuid
+import dateutil.parser
 
 class VideoTests(unittest.TestCase):
     @staticmethod
@@ -45,7 +46,32 @@ class VideoTests(unittest.TestCase):
         assert ( rv.status_code == 200 )
         a = int(rv.data, 16)        
 
-    def test_get_record(self):
+    def test_get_complete_record(self):
+        f = VideoTests.getTestPath( "test_videorecord_complete.json" )
+        jsondata = json.load(open(f))
+        rv = self.app.post('/videos', data=json.dumps(jsondata) )
+
+        key = int(rv.data, 16)
+        
+        rv = self.app.get('/videos/' + rv.data )
+        assert (rv.status_code == 200 )
+        
+        # Check presence of all fields
+        jsonresp = json.loads(rv.data)
+
+        outtime = str(dateutil.parser.parse(jsonresp['start']).ctime())
+        intime = str(dateutil.parser.parse(jsondata['start']).ctime())
+        assert ( intime == outtime )
+
+        outtime = str(dateutil.parser.parse(jsonresp['end']).ctime())
+        intime = str(dateutil.parser.parse(jsondata['end']).ctime())
+        assert ( intime == outtime )
+
+        sensorid = uuid.UUID( jsonresp['sensorid'], version=4 )
+        assert ( 'id' in jsonresp )
+        assert ( 'videoref' in jsonresp )
+
+    def test_get_minimal_record(self):
         pass
 
 if __name__ == '__main__':

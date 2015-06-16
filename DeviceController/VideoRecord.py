@@ -19,12 +19,16 @@ class VideoRecord(Document):
 
     def to_json(self):
         rv = '{ "id": "' + str(self.id) + '", "sensorid": "' + str(self.sensorid) + '"'
+
         if self.start is not None:
             rv += ', "start": "' + self.start.isoformat() + '"'
 
         if self.end is not None:
             rv += ', "end": "' + self.end.isoformat() + '"'
-
+        
+        if self.videoref is not None:
+            rv += ', "videoref": "' + str(self.videoref) + '"'
+            
         rv += '}'
 
         return rv
