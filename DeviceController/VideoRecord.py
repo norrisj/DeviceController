@@ -6,7 +6,7 @@ class VideoRecord(Document):
     start=DateTimeField()
     end=DateTimeField()
     videoref=StringField(max_length=200)
-    sensorid=UUIDField()
+    sensorid=UUIDField(required=True)
 
     @staticmethod
     def get_json_schema():
@@ -16,3 +16,15 @@ class VideoRecord(Document):
         
         with open( abs_file_path ) as data_file:    
             return json.load(data_file)
+
+    def to_json(self):
+        rv = '{ "id": "' + str(self.id) + '", "sensorid": "' + str(self.sensorid) + '"'
+        if self.start is not None:
+            rv += ', "start": "' + self.start.isoformat() + '"'
+
+        if self.end is not None:
+            rv += ', "end": "' + self.end.isoformat() + '"'
+
+        rv += '}'
+
+        return rv
