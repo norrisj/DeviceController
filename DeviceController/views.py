@@ -26,12 +26,15 @@ def movements():
         post.save()
         return str(post.id)
 
-@app.route('/videos/<_id>', methods=['GET'] )
+@app.route('/videos/<_id>', methods=['GET', 'DELETE'] )
 def movement(_id):
     err = 400
     try:
         doc = VideoRecord.objects.get(id = _id)
+        if request.method == 'DELETE':
+            doc.delete()
         return doc.to_json()
+        
     except DoesNotExist:
         err = 404
     except:
