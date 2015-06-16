@@ -4,7 +4,7 @@ web:
     service: webapp
   links:
    - db
-  command: python tests.py
+  command: python DeviceController/test/tests.py
 
 db:
   image: mongo

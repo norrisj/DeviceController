@@ -5,4 +5,5 @@ webapp:
   volumes:
    - .:/code
   environment:
-    DC_CONFIG_FILE: config/live.py
+   - DC_CONFIG_FILE=config/live.py
+   - PYTHONPATH=/code/
