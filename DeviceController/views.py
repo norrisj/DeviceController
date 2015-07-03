@@ -1,4 +1,4 @@
-from DeviceController import app
+from DeviceController import app, verify_admin
 from flask import Flask, request, abort, jsonify
 from VideoRecord import VideoRecord
 from mongoengine import *
@@ -6,6 +6,7 @@ import json
 from jsonschema import validate, ValidationError
 
 @app.route('/videos', methods=['GET', 'POST'] )
+@verify_admin
 def movements():
     if request.method == 'GET':
         ids = []

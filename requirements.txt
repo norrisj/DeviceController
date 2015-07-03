@@ -3,3 +3,4 @@ mongoengine
 pymongo==2.8.1
 jsonschema
 python-dateutil
+requests

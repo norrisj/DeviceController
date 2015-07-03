@@ -6,6 +6,9 @@ import uuid
 import dateutil.parser
 
 class VideoTests(unittest.TestCase):
+    adminkey = 'VGDCOUA7eZgsrgFSzeq31LBcJLQla0vzeXLtY3sGDr2'
+    devicekey = ''
+
     @staticmethod
     def getTestPath(fname):
         script_dir = os.path.dirname(__file__)
