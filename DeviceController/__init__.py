@@ -68,4 +68,15 @@ def verify_user_isadmin(f):
         abort(401)
     return wrapper
 
+def verify_user_isdevice(f):
+    @wraps(f)
+    @verify_user
+    def wrapper(*args, **kwds):
+        memberships = g.userdetails['memberships']
+        for membership in memberships:
+            if ( app.config['PERM_DEVICE'] in membership['permissions'] ) or ( app.config['PERM_ADMIN'] in membership['permissions'] ):
+                return f(*args, **kwds)
+        abort(401)
+    return wrapper
+
 import DeviceController.views

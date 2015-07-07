@@ -9,3 +9,4 @@ AUTHROCKET_REALM = 'rl_0vDHe26akOQPbM2pxycdUI'
 AUTHROCKET_API = 'https://api-e1.authrocket.com/v1/'
 
 PERM_ADMIN = 'role.admin'
+PERM_DEVICE = 'role.device'

@@ -1,6 +1,7 @@
-from DeviceController import app, verify_user, verify_user_isadmin
+from DeviceController import app, verify_user, verify_user_isadmin, verify_user_isdevice
 from flask import Flask, request, abort, jsonify
 from VideoRecord import VideoRecord
+from SensorRecord import SensorRecord
 from mongoengine import *
 import json
 from jsonschema import validate, ValidationError
@@ -15,7 +16,7 @@ def getmovements():
     return json.dumps( ids )
 
 @app.route('/videos', methods=['POST'] )
-@verify_user_isadmin
+@verify_user
 def postmovements():
     recordIn = request.get_json(force=True)
 
@@ -29,6 +30,7 @@ def postmovements():
     return str(post.id)
 
 @app.route('/videos/<_id>', methods=['GET', 'DELETE'] )
+@verify_user
 def movement(_id):
     err = 400
     try:
