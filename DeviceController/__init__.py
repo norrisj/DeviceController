@@ -79,4 +79,5 @@ def verify_user_isdevice(f):
         abort(401)
     return wrapper
 
-import DeviceController.views
+import DeviceController.VideoHandler
+import DeviceController.SensorHandler

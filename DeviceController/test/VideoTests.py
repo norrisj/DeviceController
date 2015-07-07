@@ -30,8 +30,10 @@ class VideoTests(unittest.TestCase):
     def test_get_videos(self):
         header = {'Authorization': self.adminkey}
         rv = self.app.get('/videos', headers=header)
+        assert ( rv.status_code == 200 )
         parsed = json.loads ( rv.data )
         assert len( parsed ) == 0
+
 
     def post_video(self, jsondata):
         header = {'Authorization': self.adminkey}
